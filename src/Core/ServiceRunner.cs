@@ -14,7 +14,7 @@ public class ServiceConfig
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Service name cannot be empty", nameof(Name));
+                throw new ArgumentException("Service name cannot be empty", nameof(value));
             _name = value;
         }
     }
@@ -25,7 +25,7 @@ public class ServiceConfig
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Service command cannot be empty", nameof(Command));
+                throw new ArgumentException("Service command cannot be empty", nameof(value));
             _command = value;
         }
     }

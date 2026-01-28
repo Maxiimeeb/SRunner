@@ -211,19 +211,26 @@ public class InteractiveUI
 
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(command))
             {
-                _serviceRunner.AddService(new ServiceConfig
+                try
                 {
-                    Name = name,
-                    Command = command,
-                    WorkingDirectory = workDir,
-                    AutoStart = false
-                });
-                UpdateServiceList();
-                if (_servicesListView != null)
-                {
-                    _servicesListView.SetSource(_serviceNames);
+                    _serviceRunner.AddService(new ServiceConfig
+                    {
+                        Name = name,
+                        Command = command,
+                        WorkingDirectory = workDir,
+                        AutoStart = false
+                    });
+                    UpdateServiceList();
+                    if (_servicesListView != null)
+                    {
+                        _servicesListView.SetSource(_serviceNames);
+                    }
+                    Application.RequestStop();
                 }
-                Application.RequestStop();
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.ErrorQuery("Error", ex.Message, "OK");
+                }
             }
             else
             {

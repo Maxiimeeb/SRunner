@@ -5,8 +5,31 @@
 /// </summary>
 public class ServiceConfig
 {
-    public string Name { get; set; } = string.Empty;
-    public string Command { get; set; } = string.Empty;
+    private string _name = string.Empty;
+    private string _command = string.Empty;
+
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Service name cannot be empty", nameof(Name));
+            _name = value;
+        }
+    }
+
+    public string Command
+    {
+        get => _command;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Service command cannot be empty", nameof(Command));
+            _command = value;
+        }
+    }
+
     public string WorkingDirectory { get; set; } = string.Empty;
     public bool AutoStart { get; set; }
 }
@@ -22,16 +45,23 @@ public class ServiceRunner
 
     public void AddService(ServiceConfig service)
     {
+        ArgumentNullException.ThrowIfNull(service);
+
+        if (_services.Any(s => s.Name.Equals(service.Name, StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new InvalidOperationException($"A service with the name '{service.Name}' already exists.");
+        }
+
         _services.Add(service);
     }
 
     public void RemoveService(string name)
     {
-        _services.RemoveAll(s => s.Name == name);
+        _services.RemoveAll(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 
     public ServiceConfig? GetService(string name)
     {
-        return _services.FirstOrDefault(s => s.Name == name);
+        return _services.FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 }

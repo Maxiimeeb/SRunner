@@ -24,7 +24,7 @@ SRunner/
 │       └── InteractiveUI.cs
 ├── .github/
 │   └── PROJECT_STRUCTURE.md  # Detailed project documentation
-└── SRunner.sln
+└── SRunner.slnx
 ```
 
 ## Building

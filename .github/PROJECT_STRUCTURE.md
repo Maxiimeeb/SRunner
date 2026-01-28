@@ -26,7 +26,7 @@ SRunner/
 
 - **Framework**: .NET 10
 - **UI Library**: Terminal.Gui 1.19.0
-- **CLI Framework**: System.CommandLine 2.0.0-rc.1.25451.107
+- **CLI Framework**: System.CommandLine 2.0.0-beta4.22272.1 (Note: RC version 2.0.0-rc.1.25451.107 has API incompatibilities with .NET 10, so using stable beta4 version instead)
 - **Language**: C# with nullable reference types enabled
 
 ## Architecture

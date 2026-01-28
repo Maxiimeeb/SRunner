@@ -1,26 +1,38 @@
-﻿using Core;
+﻿using System.CommandLine;
+using Core;
 
 namespace Cli;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task<int> Main(string[] args)
     {
-        // Simple argument parsing for --interactive flag
-        bool interactive = args.Contains("--interactive") || args.Contains("-i");
+        // Create the root command  
+        var rootCommand = new RootCommand("SRunner - CLI application to run configured services and stacks");
 
-        if (interactive)
+        // Create the --interactive option
+        var interactiveOption = new Option<bool>(
+            name: "--interactive",
+            description: "Launch interactive Terminal.GUI interface");
+        interactiveOption.AddAlias("-i");
+
+        rootCommand.AddOption(interactiveOption);
+
+        // Set the handler for the root command
+        rootCommand.SetHandler((interactive) =>
         {
-            LaunchInteractiveMode();
-        }
-        else
-        {
-            Console.WriteLine("SRunner - CLI application to run configured services and stacks");
-            Console.WriteLine("Use --interactive or -i to launch the interactive interface");
-            Console.WriteLine();
-            Console.WriteLine("Options:");
-            Console.WriteLine("  --interactive, -i  Launch interactive Terminal.GUI interface");
-        }
+            if (interactive)
+            {
+                LaunchInteractiveMode();
+            }
+            else
+            {
+                Console.WriteLine("SRunner - CLI application to run configured services and stacks");
+                Console.WriteLine("Use --interactive or -i to launch the interactive interface");
+            }
+        }, interactiveOption);
+
+        return await rootCommand.InvokeAsync(args);
     }
 
     static void LaunchInteractiveMode()

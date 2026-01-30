@@ -40,22 +40,27 @@ public class HomeDirectorySerializer(
                 "Configuration directory does not exist at '{Path}'. Will default to empty configuration",
                 RootPath
             );
-            return new SRunnerConfiguration(
-                new SRunnerServicesConfiguration()
+            return new SRunnerConfiguration
+            {
+                Service = new SRunnerServicesConfiguration()
                 {
                     Services = []
                 },
-                new SRunnerStacksConfiguration()
+                Stack = new SRunnerStacksConfiguration()
                 {
                     Stacks = []
                 }
-            );
+            };
         }
 
         var stacks = LoadStacks();
         var services = LoadServices();
 
-        return new SRunnerConfiguration(services, stacks);
+        return new SRunnerConfiguration
+        {
+            Stack = stacks,
+            Service = services
+        };
     }
 
     /// <inheritdoc />
@@ -100,7 +105,7 @@ public class HomeDirectorySerializer(
         }
 
         // Write services
-        var services = configuration.Services?.Services ?? [];
+        var services = configuration.Service.Services;
         foreach (var service in services)
         {
             var filePath = Path.Join(ServicePath, service.Id + ".yaml");
@@ -109,7 +114,7 @@ public class HomeDirectorySerializer(
         }
 
         // Write stacks
-        var stacks = configuration.Stacks?.Stacks ?? [];
+        var stacks = configuration.Stack.Stacks;
         foreach (var stack in stacks)
         {
             if (string.IsNullOrWhiteSpace(stack.Id))
@@ -155,7 +160,7 @@ public class HomeDirectorySerializer(
         }
 
         var stacks = new List<SRunnerStack>(files.Count);
-        
+
         foreach (var file in files)
         {
             try

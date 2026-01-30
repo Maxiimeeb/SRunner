@@ -1,9 +1,10 @@
 namespace SRunner.Core;
 
-public record SRunnerConfiguration(
-    SRunnerServicesConfiguration Services,
-    SRunnerStacksConfiguration Stacks
-);
+public record SRunnerConfiguration
+{
+    public required SRunnerServicesConfiguration Service { get; init; }
+    public required SRunnerStacksConfiguration Stack { get; init; }
+}
 
 public record SRunnerServicesConfiguration()
 {

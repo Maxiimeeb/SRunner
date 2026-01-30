@@ -1,21 +1,25 @@
 ﻿using System.CommandLine;
-using Core;
+using Microsoft.Extensions.Logging;
+using SRunner.Core;
+using SRunner.Core.Serialization;
 
-namespace Cli;
+namespace SRunner.Cli;
 
 class Program
 {
-    static async Task<int> Main(string[] args)
+    private static async Task<int> Main(string[] args)
     {
+        Test();
+        return 0;
         // Create the root command  
         var rootCommand = new RootCommand("SRunner - CLI application to run configured services and stacks");
 
         // Create the --interactive option
         var interactiveOption = new Option<bool>(
             name: "--interactive",
-            description: "Launch interactive Terminal.GUI interface");
+            description: "Launch interactive Terminal.GUI interface"
+        );
         interactiveOption.AddAlias("-i");
-
         rootCommand.AddOption(interactiveOption);
 
         // Set the handler for the root command
@@ -37,7 +41,17 @@ class Program
 
     static void LaunchInteractiveMode()
     {
-        var ui = new InteractiveUI();
-        ui.Run();
+        var ui = new InteractiveUi();
+    }
+
+    private static void Test()
+    {
+        var logger = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+        }).CreateLogger<HomeDirectoryLoader>();
+        var x = new HomeDirectoryLoader(logger);
+
+        x.Load();
     }
 }

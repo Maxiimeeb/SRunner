@@ -1,37 +1,13 @@
-﻿namespace Core;
+﻿namespace SRunner.Core;
 
 /// <summary>
 /// Represents a service configuration
 /// </summary>
 public class ServiceConfig
 {
-    private string _name = string.Empty;
-    private string _command = string.Empty;
+    public required string Name { get; set; }
 
-    public string Name
-    {
-        get => _name;
-        set
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Service name cannot be empty", nameof(value));
-            _name = value;
-        }
-    }
-
-    public string Command
-    {
-        get => _command;
-        set
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Service command cannot be empty", nameof(value));
-            _command = value;
-        }
-    }
-
-    public string WorkingDirectory { get; set; } = string.Empty;
-    public bool AutoStart { get; set; }
+    public required string Command { get; set; }
 }
 
 /// <summary>

@@ -11,10 +11,10 @@ SRunner/
 │   └── PROJECT_STRUCTURE.md
 ├── src/                  # Source code directory
 │   ├── Core/            # Core business logic (non-UI)
-│   │   └── ServiceRunner.cs      # Service models and management logic
+│   │   └── File.cs      # Service models and management logic
 │   └── Cli/             # Command-line interface (entry point)
 │       ├── Program.cs            # Entry point with System.CommandLine
-│       ├── InteractiveUI.cs      # Terminal.GUI interactive interface
+│       ├── InteractiveUI.cs      # Terminal.GUI TUI
 │       └── Cli.csproj            # CLI project file
 ├── SRunner.slnx         # Solution file
 ├── .gitignore           # Git ignore file
